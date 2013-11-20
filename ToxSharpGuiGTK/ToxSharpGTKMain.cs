@@ -30,6 +30,30 @@ namespace ToxSharpGTK
 		}
 	}
 
+	// GTK weirdness: must init/quit application outside, else it chokes
+	public class ToxSharpGTK : Interfaces.IUIFactory
+	{
+		protected ToxSharpGTKMain wnd;
+
+		public ToxSharpGTK()
+		{
+			Application.Init();
+		}
+
+		public Interfaces.IUIReactions Create()
+		{
+			if (wnd == null)
+				wnd = new ToxSharpGTKMain();
+
+			return wnd;
+		}
+
+		public void Quit()
+		{
+			wnd = null;
+		}
+	}
+
 	public partial class ToxSharpGTKMain : Gtk.Window, Interfaces.IUIReactions
 	{
 		protected class Size
@@ -42,11 +66,6 @@ namespace ToxSharpGTK
 
 		protected Interfaces.IUIActions uiactions;
 
-		static public void Prepare()
-		{
-			Application.Init();
-		}
-
 		public ToxSharpGTKMain() : base (Gtk.WindowType.Toplevel)
 		{
 		}
@@ -54,7 +73,7 @@ namespace ToxSharpGTK
 		public void Init(Interfaces.IUIActions uiactions)
 		{
 			this.uiactions = uiactions;
-
+			Application.Init();
 			Build();
 
 			ConnectState(false, null);

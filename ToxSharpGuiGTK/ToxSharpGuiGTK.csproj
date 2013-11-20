@@ -19,6 +19,11 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="Execute" command="../../ToxSharpGui/ToxSharpGui/bin/Debug-x86/ToxSharpGui.exe --gui=gtk" />
+      </CustomCommands>
+    </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -45,15 +50,23 @@
       <Private>False</Private>
       <Package>gtk-sharp-2.0</Package>
     </Reference>
+    <Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Private>False</Private>
+      <Package>glib-sharp-2.0</Package>
+    </Reference>
+    <Reference Include="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Private>False</Private>
+      <Package>gtk-sharp-2.0</Package>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="gtk-gui\generated.cs" />
+    <Compile Include="ToxSharpGTKInputTwoLines.cs" />
+    <Compile Include="gtk-gui\ToxSharpGTK.ToxSharpGTKInputTwoLines.cs" />
     <Compile Include="ToxSharpGTKMain.cs" />
     <Compile Include="ToxSharpGTKMain_Nodes.cs" />
     <Compile Include="gtk-gui\ToxSharpGTK.ToxSharpGTKMain.cs" />
-    <Compile Include="ToxSharpGTKInputTwoLines.cs" />
-    <Compile Include="gtk-gui\ToxSharpGTK.ToxSharpGTKInputTwoLines.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

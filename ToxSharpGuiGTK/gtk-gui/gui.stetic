@@ -6,7 +6,6 @@
   </configuration>
   <import>
     <widget-library name="../bin/Debug/ToxSharpGuiGTK.dll" internal="true" />
-    <widget-library name="../../../ToxSharpGui/ToxSharpGui/bin/Debug-x86/ToxSharpGui.exe" />
   </import>
   <widget class="Gtk.Window" id="ToxSharpGTK.ToxSharpGTKMain" design-size="623 399">
     <property name="MemberName" />
