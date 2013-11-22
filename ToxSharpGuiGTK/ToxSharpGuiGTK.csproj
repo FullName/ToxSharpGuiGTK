@@ -22,6 +22,7 @@
     <CustomCommands>
       <CustomCommands>
         <Command type="Execute" command="../../ToxSharpGui/ToxSharpGui/bin/Debug-x86/ToxSharpGui.exe --gui=gtk" />
+        <Command type="AfterBuild" command="cp ${TargetFile} ../ToxSharpGuiRun/" workingdir="${SolutionDir}" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>

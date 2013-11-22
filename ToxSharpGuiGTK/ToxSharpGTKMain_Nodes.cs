@@ -388,14 +388,22 @@ namespace ToxSharpGTK
 		{
 			if (typeid == null)
 				return;
-			
-			if ((typeid.entryType != TypeIDTreeNode.EntryType.Friend) &&
-			    (typeid.entryType != TypeIDTreeNode.EntryType.Group))
-				return;
 
-			Interfaces.SourceType type = typeid.entryType == TypeIDTreeNode.EntryType.Friend ? Interfaces.SourceType.Friend : Interfaces.SourceType.Group;
+			Interfaces.SourceType sourcetype;
+			switch(typeid.entryType)
+			{
+				case TypeIDTreeNode.EntryType.Friend:
+					sourcetype = Interfaces.SourceType.Friend;
+					break;
+				case TypeIDTreeNode.EntryType.Group:
+					sourcetype = Interfaces.SourceType.Group;
+					break;
+				default:
+					return;
+			}
+
 			foreach(ListStoreSourceTypeID liststore in liststorepartial)
-				if ((liststore.type == type) &&
+				if ((liststore.type == sourcetype) &&
 				    (liststore.id == typeid.id))
 					return;
 
@@ -407,7 +415,7 @@ namespace ToxSharpGTK
 			nodeview.AppendColumn("Text", renderer, "text", 1);
 			
 			// source, message, source-type, source-id, timestamp
-			ListStoreSourceTypeID liststorenew = new ListStoreSourceTypeID(type, typeid.ids(), typeof(string), typeof(string), typeof(byte), typeof(UInt16), typeof(Int64));
+			ListStoreSourceTypeID liststorenew = new ListStoreSourceTypeID(sourcetype, typeid.ids(), typeof(string), typeof(string), typeof(byte), typeof(UInt16), typeof(Int64));
 			nodeview.Model = liststorenew;
 
 			liststorepartial.Add(liststorenew);
@@ -436,6 +444,28 @@ namespace ToxSharpGTK
 			notebook1.AppendPage(scrolledwindow, new Gtk.Label(label));
 			notebook1.ShowAll(); // required to make nodeview, label and notebook display
 			notebook1.CurrentPage = notebook1.NPages - 1; // requires ShowAll before
+
+			TreeIter iter;
+			if (liststoreall.GetIterFirst(out iter))
+				do
+				{
+					object[] olist = new object[5];
+					for(int i = 0; i < 5; i++)
+						olist[i] = liststoreall.GetValue(iter, i);
+
+					try
+					{
+						Interfaces.SourceType linetype = (Interfaces.SourceType)olist[2];
+						UInt16 lineid = (UInt16)olist[3];
+						if ((linetype == sourcetype) && (lineid == typeid.ids()))
+							liststorenew.AppendValues(olist);
+					}
+					catch
+					{
+						// no action
+					}
+				} while (liststoreall.IterNext(ref iter));
+
 
 			Focus = entry1;
 		}

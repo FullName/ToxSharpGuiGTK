@@ -24,10 +24,9 @@
             <property name="Spacing">6</property>
             <child>
               <widget class="Gtk.CheckButton" id="checkbutton1">
-                <property name="MemberName" />
+                <property name="MemberName">checkbutton1</property>
                 <property name="CanFocus">True</property>
-                <property name="Label" translatable="yes">checkbutton1</property>
-                <property name="Active">True</property>
+                <property name="Label" translatable="yes">Connecting...</property>
                 <property name="DrawIndicator">True</property>
                 <property name="HasLabel">True</property>
                 <property name="UseUnderline">True</property>

@@ -89,9 +89,44 @@ namespace ToxSharpGTK
 			Focus = entry1;
 		}
 
-		public void Run()
+		protected string uistate;
+
+		public void Run(string uistate)
 		{
+			this.uistate = uistate;
 			Show();
+
+			try
+			{
+				if (uistate != null)
+				{
+					string[] strings = uistate.Split('\n');
+					for(int i = 0; i < strings.Length; i++)
+					{
+						char[] seps = new char[1];
+						seps[0] = '=';
+						string[] args = strings[i].Split(seps, 2);
+						if (args.Length > 1)
+							if (args[0] == "WINDOW")
+							{
+								string[] values = args[1].Split(';');
+								if (values.Length == 4)
+								{
+									int x = Convert.ToInt32(values[0]);
+									int y = Convert.ToInt32(values[1]);
+									Move(x, y);
+									WidthRequest = Convert.ToInt32(values[2]);
+									HeightRequest = Convert.ToInt32(values[2]);
+								}
+							}
+					}
+				}
+			}
+			catch (Exception e)
+			{
+				System.Console.WriteLine("ToxSharpGTK: uistate: failed to parse >>\n" + e.Message + "<<\n");
+			}
+
 			Application.Run();
 		}
 
@@ -278,7 +313,12 @@ namespace ToxSharpGTK
 
 		public void Quit()
 		{
-			uiactions.QuitPrepare();
+			string uistate = "";
+			int x, y;
+			this.GetPosition(out x, out y);
+			uistate += "WINDOW=" + x + ";" + y + ";" + WidthRequest + ";" + HeightRequest + "\n";
+
+			uiactions.QuitPrepare(uistate);
 			Application.Quit();
 		}
 
