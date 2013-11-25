@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug - x86</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
@@ -10,7 +10,7 @@
     <RootNamespace>ToxSharpGuiGTK</RootNamespace>
     <AssemblyName>ToxSharpGuiGTK</AssemblyName>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug - x86|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -19,14 +19,42 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
+    <PlatformTarget>x86</PlatformTarget>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
     <CustomCommands>
       <CustomCommands>
         <Command type="Execute" command="../../ToxSharpGui/ToxSharpGui/bin/Debug-x86/ToxSharpGui.exe --gui=gtk" />
-        <Command type="AfterBuild" command="cp ${TargetFile} ../ToxSharpGuiRun/" workingdir="${SolutionDir}" />
+        <Command type="AfterBuild" command="cp ${TargetFile} ../ToxSharpGuiRun32/" workingdir="${SolutionDir}" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release - x86|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug - Any|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <ConsolePause>false</ConsolePause>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="Execute" command="../../ToxSharpGui/ToxSharpGui/bin/Debug-x86/ToxSharpGui.exe --gui=gtk" />
+        <Command type="AfterBuild" command="cp ${TargetFile} ../ToxSharpGuiRunAny/" workingdir="${SolutionDir}" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release - Any|AnyCPU' ">
     <DebugType>none</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release</OutputPath>
@@ -45,7 +73,7 @@
     <Reference Include="Mono.Posix" />
     <Reference Include="System.Drawing" />
     <Reference Include="ToxSharpGui">
-      <HintPath>..\..\ToxSharpGui\ToxSharpGui\bin\Debug-x86\ToxSharpGui.exe</HintPath>
+      <HintPath>..\..\ToxSharpGui\ToxSharpGui\bin\Debug-Any\ToxSharpGui.exe</HintPath>
     </Reference>
     <Reference Include="pango-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
       <Private>False</Private>

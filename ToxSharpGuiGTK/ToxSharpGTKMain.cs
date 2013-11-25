@@ -132,16 +132,43 @@ namespace ToxSharpGTK
 
 	/*****************************************************************************/
 
-		public void TitleUpdate(string name, string ID)
+		internal class EventArgsObj : EventArgs
 		{
-			if ((name != null) && (ID != null))
-				Title = "Tox# - " + name + " [" + ID + "]";
+			public Interfaces.CallToxDo calltoxdo;
+			public IntPtr tox;
+
+			public EventArgsObj(Interfaces.CallToxDo calltoxdo, IntPtr tox) : base()
+			{
+				this.calltoxdo = calltoxdo;
+				this.tox = tox;
+			}
+		}
+
+		internal void ToxDoEvent(object sender, EventArgs e)
+		{
+			EventArgsObj eao = e as EventArgsObj;
+			eao.calltoxdo(eao.tox);
+		}
+
+		public void ToxDo(Interfaces.CallToxDo calltoxdo, IntPtr tox)
+		{
+			EventArgsObj eao = new EventArgsObj(calltoxdo, tox);
+			Application.Invoke(null, eao, ToxDoEvent);
 		}
 
 		public void ConnectState(bool state, string text)
 		{
 			checkbutton1.Active = state;
 			checkbutton1.Label = text;
+		}
+
+	/*****************************************************************************/
+	/*****************************************************************************/
+
+		public void TitleUpdate(string name, string ID)
+		{
+			if ((name != null) && (ID != null))
+				Title = "Tox# - " + name + " [" + ID + "]";
 		}
 
 		public void ClipboardSend(string text)

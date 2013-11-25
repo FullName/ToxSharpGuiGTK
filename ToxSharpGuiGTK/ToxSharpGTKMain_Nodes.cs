@@ -166,6 +166,9 @@ namespace ToxSharpGTK
 				case TypeIDTreeNode.EntryType.Rendezvous:
 					text = "^?";
 					break;
+				case TypeIDTreeNode.EntryType.GroupMember:
+					text = "+";
+					break;
 				default:
 					text = "??";
 					break;
@@ -352,8 +355,8 @@ namespace ToxSharpGTK
 				}
 
 			holder = new HolderTreeNode(typeid);
-
 			store.AppendValues(itersub, holder);
+
 			treeview1.ExpandAll();
 			treeview1.QueueDraw();
 		}
@@ -376,6 +379,8 @@ namespace ToxSharpGTK
 
 		public void TreeUpdateSub(TypeIDTreeNode typeid, TypeIDTreeNode parenttypeid)
 		{
+			// potentially update Holder if Mark/Text/Tip moves there
+			treeview1.QueueDraw();
 		}
 
 	/*
