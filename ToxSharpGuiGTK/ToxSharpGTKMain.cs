@@ -115,8 +115,9 @@ namespace ToxSharpGTK
 									int x = Convert.ToInt32(values[0]);
 									int y = Convert.ToInt32(values[1]);
 									Move(x, y);
-									WidthRequest = Convert.ToInt32(values[2]);
-									HeightRequest = Convert.ToInt32(values[2]);
+									int width = Convert.ToInt32(values[2]);
+									int height = Convert.ToInt32(values[2]);
+									SetDefaultSize(width, height);
 								}
 							}
 					}

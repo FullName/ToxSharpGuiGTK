@@ -98,6 +98,50 @@ namespace ToxSharpGTK
 				SetByTypeRaw(typeid.entryType, TreeIter.Zero);
 			}
 		}
+
+
+		public void DeleteSub(TypeIDTreeNode typeid, TypeIDTreeNode parenttypeid)
+		{
+			TreeIter grandparent;
+			if (!GetByTypeRaw(parenttypeid.entryType, out grandparent))
+				return;
+
+			TreeIter parent = TreeIter.Zero;
+			int num = store.IterNChildren(grandparent);
+			for(int i = 0; i < num; i++)
+			{
+				TreeIter iter;
+				if (store.IterNthChild(out iter, grandparent, i))
+				{
+					HolderTreeNode holder = store.GetValue(iter, 0) as HolderTreeNode;
+					if (holder != null)
+						if (holder.typeid == parenttypeid)
+						{
+							parent = iter;
+							break;
+						}
+				}
+			}
+
+			if (parent.Equals(TreeIter.Zero))
+				return;
+
+			num = store.IterNChildren(parent);
+			for(int i = 0; i < num; i++)
+			{
+				TreeIter iter;
+				if (store.IterNthChild(out iter, parent, i))
+				{
+					HolderTreeNode holder = store.GetValue(iter, 0) as HolderTreeNode;
+					if (holder != null)
+						if (holder.typeid == typeid)
+						{
+							store.Remove(ref iter);
+							break;
+						}
+				}
+			}
+		}
 	}
 
 	public class ListStoreSourceTypeID : Gtk.ListStore
@@ -369,6 +413,8 @@ namespace ToxSharpGTK
 
 		public void TreeDelSub(TypeIDTreeNode typeid, TypeIDTreeNode parenttypeid)
 		{
+			storeiterators.DeleteSub(typeid, parenttypeid);
+			treeview1.QueueDraw();
 		}
 
 		public void TreeUpdate(TypeIDTreeNode typeid)
